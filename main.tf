@@ -59,7 +59,7 @@ resource "aws_iam_role" "node_role" { // IAM role for EKS worker nodes
   })
 }
 
-resource "aws_iam_role_policy_attachment" "node_policies" { // Attach necessary policies to the node role
+resource "aws_iam_role_policy_attachment" "node_policies" { 
   count = 3         // Three policies to attach 
   role  = aws_iam_role.node_role.name // Node role name
 
@@ -70,7 +70,7 @@ resource "aws_iam_role_policy_attachment" "node_policies" { // Attach necessary 
   ], count.index)
 }
 
-resource "aws_eks_cluster" "mycluster" { // EKS Cluster resource
+resource "aws_eks_cluster" "mycluster" { 
   name     = var.cluster_name   // Cluster name
   role_arn = aws_iam_role.eks_cluster_role.arn // IAM role for the cluster
 
@@ -84,7 +84,7 @@ resource "aws_eks_cluster" "mycluster" { // EKS Cluster resource
 }
 
 
-resource "aws_eks_node_group" "nodegroup" { // EKS Node Group resource
+resource "aws_eks_node_group" "nodegroup" { 
   cluster_name    = aws_eks_cluster.mycluster.name
   node_group_name = "default-node-group" // Name of the node group
   node_role_arn   = aws_iam_role.node_role.arn // IAM role for the node group
